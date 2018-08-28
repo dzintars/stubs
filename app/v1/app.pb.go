@@ -7,6 +7,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -270,6 +275,111 @@ func init() {
 	proto.RegisterType((*ListApplicationsRequest)(nil), "oswee.app.v1.ListApplicationsRequest")
 	proto.RegisterType((*ListApplicationsResponse)(nil), "oswee.app.v1.ListApplicationsResponse")
 	proto.RegisterType((*Application)(nil), "oswee.app.v1.Application")
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// ApplicationServiceClient is the client API for ApplicationService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ApplicationServiceClient interface {
+	GetApplication(ctx context.Context, in *GetApplicationRequest, opts ...grpc.CallOption) (*GetApplicationResponse, error)
+	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
+}
+
+type applicationServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewApplicationServiceClient(cc *grpc.ClientConn) ApplicationServiceClient {
+	return &applicationServiceClient{cc}
+}
+
+func (c *applicationServiceClient) GetApplication(ctx context.Context, in *GetApplicationRequest, opts ...grpc.CallOption) (*GetApplicationResponse, error) {
+	out := new(GetApplicationResponse)
+	err := c.cc.Invoke(ctx, "/oswee.app.v1.ApplicationService/GetApplication", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *applicationServiceClient) ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error) {
+	out := new(ListApplicationsResponse)
+	err := c.cc.Invoke(ctx, "/oswee.app.v1.ApplicationService/ListApplications", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ApplicationServiceServer is the server API for ApplicationService service.
+type ApplicationServiceServer interface {
+	GetApplication(context.Context, *GetApplicationRequest) (*GetApplicationResponse, error)
+	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
+}
+
+func RegisterApplicationServiceServer(s *grpc.Server, srv ApplicationServiceServer) {
+	s.RegisterService(&_ApplicationService_serviceDesc, srv)
+}
+
+func _ApplicationService_GetApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).GetApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.app.v1.ApplicationService/GetApplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).GetApplication(ctx, req.(*GetApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApplicationService_ListApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApplicationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).ListApplications(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.app.v1.ApplicationService/ListApplications",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).ListApplications(ctx, req.(*ListApplicationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ApplicationService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "oswee.app.v1.ApplicationService",
+	HandlerType: (*ApplicationServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetApplication",
+			Handler:    _ApplicationService_GetApplication_Handler,
+		},
+		{
+			MethodName: "ListApplications",
+			Handler:    _ApplicationService_ListApplications_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "app/v1/app.proto",
 }
 
 func init() { proto.RegisterFile("app/v1/app.proto", fileDescriptor_app_69baba6ac8e549b3) }

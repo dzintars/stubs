@@ -6,7 +6,12 @@ package v1 // import "github.com/oswee/stubs/dms/v1"
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "github.com/oswee/stubs"
+import stubs "github.com/oswee/stubs"
+
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -30,7 +35,7 @@ func (m *CreateDeliveryOrderRequest) Reset()         { *m = CreateDeliveryOrderR
 func (m *CreateDeliveryOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateDeliveryOrderRequest) ProtoMessage()    {}
 func (*CreateDeliveryOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{0}
+	return fileDescriptor_dms_4050419296396ef3, []int{0}
 }
 func (m *CreateDeliveryOrderRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateDeliveryOrderRequest.Unmarshal(m, b)
@@ -70,7 +75,7 @@ func (m *ListDeliveryOrdersRequest) Reset()         { *m = ListDeliveryOrdersReq
 func (m *ListDeliveryOrdersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListDeliveryOrdersRequest) ProtoMessage()    {}
 func (*ListDeliveryOrdersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{1}
+	return fileDescriptor_dms_4050419296396ef3, []int{1}
 }
 func (m *ListDeliveryOrdersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDeliveryOrdersRequest.Unmarshal(m, b)
@@ -122,7 +127,7 @@ func (m *ListDeliveryOrdersResponse) Reset()         { *m = ListDeliveryOrdersRe
 func (m *ListDeliveryOrdersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListDeliveryOrdersResponse) ProtoMessage()    {}
 func (*ListDeliveryOrdersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{2}
+	return fileDescriptor_dms_4050419296396ef3, []int{2}
 }
 func (m *ListDeliveryOrdersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDeliveryOrdersResponse.Unmarshal(m, b)
@@ -160,7 +165,7 @@ func (m *UpdateDeliveryOrderRequest) Reset()         { *m = UpdateDeliveryOrderR
 func (m *UpdateDeliveryOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateDeliveryOrderRequest) ProtoMessage()    {}
 func (*UpdateDeliveryOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{3}
+	return fileDescriptor_dms_4050419296396ef3, []int{3}
 }
 func (m *UpdateDeliveryOrderRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateDeliveryOrderRequest.Unmarshal(m, b)
@@ -198,7 +203,7 @@ func (m *DeleteDeliveryOrderRequest) Reset()         { *m = DeleteDeliveryOrderR
 func (m *DeleteDeliveryOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteDeliveryOrderRequest) ProtoMessage()    {}
 func (*DeleteDeliveryOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{4}
+	return fileDescriptor_dms_4050419296396ef3, []int{4}
 }
 func (m *DeleteDeliveryOrderRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteDeliveryOrderRequest.Unmarshal(m, b)
@@ -238,7 +243,7 @@ func (m *GeoCodeDeliveryOrderRequest) Reset()         { *m = GeoCodeDeliveryOrde
 func (m *GeoCodeDeliveryOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*GeoCodeDeliveryOrderRequest) ProtoMessage()    {}
 func (*GeoCodeDeliveryOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{5}
+	return fileDescriptor_dms_4050419296396ef3, []int{5}
 }
 func (m *GeoCodeDeliveryOrderRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GeoCodeDeliveryOrderRequest.Unmarshal(m, b)
@@ -298,7 +303,7 @@ func (m *DeliveryOrder) Reset()         { *m = DeliveryOrder{} }
 func (m *DeliveryOrder) String() string { return proto.CompactTextString(m) }
 func (*DeliveryOrder) ProtoMessage()    {}
 func (*DeliveryOrder) Descriptor() ([]byte, []int) {
-	return fileDescriptor_dms_ef2b5b885cc630f5, []int{6}
+	return fileDescriptor_dms_4050419296396ef3, []int{6}
 }
 func (m *DeliveryOrder) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeliveryOrder.Unmarshal(m, b)
@@ -391,9 +396,213 @@ func init() {
 	proto.RegisterType((*DeliveryOrder)(nil), "oswee.dms.v1.DeliveryOrder")
 }
 
-func init() { proto.RegisterFile("dms/v1/dms.proto", fileDescriptor_dms_ef2b5b885cc630f5) }
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
 
-var fileDescriptor_dms_ef2b5b885cc630f5 = []byte{
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// ShippingServiceClient is the client API for ShippingService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ShippingServiceClient interface {
+	ListDeliveryOrders(ctx context.Context, in *ListDeliveryOrdersRequest, opts ...grpc.CallOption) (*ListDeliveryOrdersResponse, error)
+	CreateDeliveryOrder(ctx context.Context, in *CreateDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error)
+	UpdateDeliveryOrder(ctx context.Context, in *UpdateDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error)
+	DeleteDeliveryOrder(ctx context.Context, in *DeleteDeliveryOrderRequest, opts ...grpc.CallOption) (*stubs.Empty, error)
+	GeoCodeDeliveryOrder(ctx context.Context, in *GeoCodeDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error)
+}
+
+type shippingServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewShippingServiceClient(cc *grpc.ClientConn) ShippingServiceClient {
+	return &shippingServiceClient{cc}
+}
+
+func (c *shippingServiceClient) ListDeliveryOrders(ctx context.Context, in *ListDeliveryOrdersRequest, opts ...grpc.CallOption) (*ListDeliveryOrdersResponse, error) {
+	out := new(ListDeliveryOrdersResponse)
+	err := c.cc.Invoke(ctx, "/oswee.dms.v1.ShippingService/ListDeliveryOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingServiceClient) CreateDeliveryOrder(ctx context.Context, in *CreateDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error) {
+	out := new(DeliveryOrder)
+	err := c.cc.Invoke(ctx, "/oswee.dms.v1.ShippingService/CreateDeliveryOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingServiceClient) UpdateDeliveryOrder(ctx context.Context, in *UpdateDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error) {
+	out := new(DeliveryOrder)
+	err := c.cc.Invoke(ctx, "/oswee.dms.v1.ShippingService/UpdateDeliveryOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingServiceClient) DeleteDeliveryOrder(ctx context.Context, in *DeleteDeliveryOrderRequest, opts ...grpc.CallOption) (*stubs.Empty, error) {
+	out := new(stubs.Empty)
+	err := c.cc.Invoke(ctx, "/oswee.dms.v1.ShippingService/DeleteDeliveryOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingServiceClient) GeoCodeDeliveryOrder(ctx context.Context, in *GeoCodeDeliveryOrderRequest, opts ...grpc.CallOption) (*DeliveryOrder, error) {
+	out := new(DeliveryOrder)
+	err := c.cc.Invoke(ctx, "/oswee.dms.v1.ShippingService/GeoCodeDeliveryOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ShippingServiceServer is the server API for ShippingService service.
+type ShippingServiceServer interface {
+	ListDeliveryOrders(context.Context, *ListDeliveryOrdersRequest) (*ListDeliveryOrdersResponse, error)
+	CreateDeliveryOrder(context.Context, *CreateDeliveryOrderRequest) (*DeliveryOrder, error)
+	UpdateDeliveryOrder(context.Context, *UpdateDeliveryOrderRequest) (*DeliveryOrder, error)
+	DeleteDeliveryOrder(context.Context, *DeleteDeliveryOrderRequest) (*stubs.Empty, error)
+	GeoCodeDeliveryOrder(context.Context, *GeoCodeDeliveryOrderRequest) (*DeliveryOrder, error)
+}
+
+func RegisterShippingServiceServer(s *grpc.Server, srv ShippingServiceServer) {
+	s.RegisterService(&_ShippingService_serviceDesc, srv)
+}
+
+func _ShippingService_ListDeliveryOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDeliveryOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingServiceServer).ListDeliveryOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.dms.v1.ShippingService/ListDeliveryOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingServiceServer).ListDeliveryOrders(ctx, req.(*ListDeliveryOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingService_CreateDeliveryOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeliveryOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingServiceServer).CreateDeliveryOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.dms.v1.ShippingService/CreateDeliveryOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingServiceServer).CreateDeliveryOrder(ctx, req.(*CreateDeliveryOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingService_UpdateDeliveryOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDeliveryOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingServiceServer).UpdateDeliveryOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.dms.v1.ShippingService/UpdateDeliveryOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingServiceServer).UpdateDeliveryOrder(ctx, req.(*UpdateDeliveryOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingService_DeleteDeliveryOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDeliveryOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingServiceServer).DeleteDeliveryOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.dms.v1.ShippingService/DeleteDeliveryOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingServiceServer).DeleteDeliveryOrder(ctx, req.(*DeleteDeliveryOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingService_GeoCodeDeliveryOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GeoCodeDeliveryOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingServiceServer).GeoCodeDeliveryOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.dms.v1.ShippingService/GeoCodeDeliveryOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingServiceServer).GeoCodeDeliveryOrder(ctx, req.(*GeoCodeDeliveryOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ShippingService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "oswee.dms.v1.ShippingService",
+	HandlerType: (*ShippingServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListDeliveryOrders",
+			Handler:    _ShippingService_ListDeliveryOrders_Handler,
+		},
+		{
+			MethodName: "CreateDeliveryOrder",
+			Handler:    _ShippingService_CreateDeliveryOrder_Handler,
+		},
+		{
+			MethodName: "UpdateDeliveryOrder",
+			Handler:    _ShippingService_UpdateDeliveryOrder_Handler,
+		},
+		{
+			MethodName: "DeleteDeliveryOrder",
+			Handler:    _ShippingService_DeleteDeliveryOrder_Handler,
+		},
+		{
+			MethodName: "GeoCodeDeliveryOrder",
+			Handler:    _ShippingService_GeoCodeDeliveryOrder_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "dms/v1/dms.proto",
+}
+
+func init() { proto.RegisterFile("dms/v1/dms.proto", fileDescriptor_dms_4050419296396ef3) }
+
+var fileDescriptor_dms_4050419296396ef3 = []byte{
 	// 553 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x7f, 0x6b, 0xd3, 0x40,
 	0x18, 0x26, 0xad, 0xdb, 0xec, 0xdb, 0x35, 0x1d, 0x57, 0x85, 0x98, 0x29, 0xab, 0x05, 0x5d, 0x07,

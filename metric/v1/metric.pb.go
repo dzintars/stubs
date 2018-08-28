@@ -6,7 +6,12 @@ package v1 // import "github.com/oswee/stubs/metric/v1"
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "github.com/oswee/stubs"
+import stubs "github.com/oswee/stubs"
+
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -154,6 +159,78 @@ func (m *PageView) GetRequestHeaders() string {
 func init() {
 	proto.RegisterType((*CreatePageViewRequest)(nil), "oswee.metric.v1.CreatePageViewRequest")
 	proto.RegisterType((*PageView)(nil), "oswee.metric.v1.PageView")
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// MetricClient is the client API for Metric service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type MetricClient interface {
+	CreatePageView(ctx context.Context, in *CreatePageViewRequest, opts ...grpc.CallOption) (*stubs.Empty, error)
+}
+
+type metricClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewMetricClient(cc *grpc.ClientConn) MetricClient {
+	return &metricClient{cc}
+}
+
+func (c *metricClient) CreatePageView(ctx context.Context, in *CreatePageViewRequest, opts ...grpc.CallOption) (*stubs.Empty, error) {
+	out := new(stubs.Empty)
+	err := c.cc.Invoke(ctx, "/oswee.metric.v1.Metric/CreatePageView", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MetricServer is the server API for Metric service.
+type MetricServer interface {
+	CreatePageView(context.Context, *CreatePageViewRequest) (*stubs.Empty, error)
+}
+
+func RegisterMetricServer(s *grpc.Server, srv MetricServer) {
+	s.RegisterService(&_Metric_serviceDesc, srv)
+}
+
+func _Metric_CreatePageView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePageViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetricServer).CreatePageView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.metric.v1.Metric/CreatePageView",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetricServer).CreatePageView(ctx, req.(*CreatePageViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Metric_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "oswee.metric.v1.Metric",
+	HandlerType: (*MetricServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreatePageView",
+			Handler:    _Metric_CreatePageView_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "metric/v1/metric.proto",
 }
 
 func init() { proto.RegisterFile("metric/v1/metric.proto", fileDescriptor_metric_3609cb500ecfa0fb) }

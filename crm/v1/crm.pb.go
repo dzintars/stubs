@@ -7,6 +7,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -136,6 +141,78 @@ func init() {
 	proto.RegisterType((*ListCustomersRequest)(nil), "oswee.crm.v1.ListCustomersRequest")
 	proto.RegisterType((*ListCustomersResponse)(nil), "oswee.crm.v1.ListCustomersResponse")
 	proto.RegisterType((*Customer)(nil), "oswee.crm.v1.Customer")
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// CustomersClient is the client API for Customers service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type CustomersClient interface {
+	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
+}
+
+type customersClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewCustomersClient(cc *grpc.ClientConn) CustomersClient {
+	return &customersClient{cc}
+}
+
+func (c *customersClient) ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error) {
+	out := new(ListCustomersResponse)
+	err := c.cc.Invoke(ctx, "/oswee.crm.v1.Customers/ListCustomers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CustomersServer is the server API for Customers service.
+type CustomersServer interface {
+	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
+}
+
+func RegisterCustomersServer(s *grpc.Server, srv CustomersServer) {
+	s.RegisterService(&_Customers_serviceDesc, srv)
+}
+
+func _Customers_ListCustomers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCustomersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomersServer).ListCustomers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/oswee.crm.v1.Customers/ListCustomers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomersServer).ListCustomers(ctx, req.(*ListCustomersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Customers_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "oswee.crm.v1.Customers",
+	HandlerType: (*CustomersServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListCustomers",
+			Handler:    _Customers_ListCustomers_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "crm/v1/crm.proto",
 }
 
 func init() { proto.RegisterFile("crm/v1/crm.proto", fileDescriptor_crm_672403bd48afa943) }
